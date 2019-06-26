@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Recycler View 사용
         init();
 
         getData();
@@ -40,10 +41,9 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < 100; i++){
             list.add(String.format("TEXT %d", i));
         }
+        // Recycler View 사용 종료
 
-        TabHost tabHost1 = (TabHost) findViewById(R.id.tabHost1) ;
-        tabHost1.setup() ;
-
+        // Gallery 구현
         Gallery gallery = (Gallery) findViewById(R.id.gallery);
         gallery.setAdapter(new ImageAdapter(this));
 
@@ -54,6 +54,10 @@ public class MainActivity extends AppCompatActivity {
                 imageView.setImageResource(imageIDs[position]);
             }
         });
+
+        // TabBar View 구현
+        TabHost tabHost1 = (TabHost) findViewById(R.id.tabHost1) ;
+        tabHost1.setup() ;
 
         // 첫 번째 Tab. (탭 표시 텍스트:"연락처"), (페이지 뷰:"phoneBook")
         TabHost.TabSpec ts1 = tabHost1.newTabSpec("Tab Spec 1") ;

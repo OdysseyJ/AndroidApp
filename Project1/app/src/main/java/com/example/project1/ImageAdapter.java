@@ -10,7 +10,7 @@ import android.widget.ImageView;
 
 public class ImageAdapter extends BaseAdapter {
 
-    Integer[] imageIDs = {
+    static Integer[] imageIDs = {
             R.drawable.sample_1,
             R.drawable.sample_2,
             R.drawable.sample_3,

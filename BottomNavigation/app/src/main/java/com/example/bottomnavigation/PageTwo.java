@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,7 +38,10 @@ public class PageTwo extends Fragment {
 
         gallery.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v, int position, long id){
-                Toast.makeText(container.getContext(), "이미지" + (position + 1) + "가 선택되었습니다.", Toast.LENGTH_SHORT).show();
+                Toast toast = Toast.makeText(container.getContext(), "이미지" + (position + 1) + "가 선택되었습니다.", Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.BOTTOM, 0, 200);
+                toast.show();
+
                 ImageView imageView = (ImageView) fragment_two.findViewById(R.id.image);
                 imageView.setImageResource(imageIDs[position]);
             }

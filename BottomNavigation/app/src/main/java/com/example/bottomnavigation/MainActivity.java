@@ -2,10 +2,13 @@ package com.example.bottomnavigation;
 
 import android.os.Bundle;
 
+import android.view.Menu;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager.widget.ViewPager;
 
@@ -16,15 +19,9 @@ public class MainActivity extends AppCompatActivity {
     ViewPager viewPager;
     BottomNavigationView navigation;
 
-    //RecyclerView 사용을 위한 어댑터
-    private RecyclerAdapter adapter;
-
     //ImageID
     Integer[] imageIDs = ImageAdapter.imageIDs;
 
-    // 파싱할 최종 데이터 담아주기 위한 문자열.
-    String json;
-    Integer size;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +35,31 @@ public class MainActivity extends AppCompatActivity {
         setupFm(getSupportFragmentManager(), viewPager); //Setup Fragment
         viewPager.setCurrentItem(0); //Set Currrent Item When Activity Start
         viewPager.setOnPageChangeListener(new PageChange()); //Listeners For Viewpager When Page Changed
+
+        //툴바
+        Toolbar tb = (Toolbar) findViewById(R.id.app_toolbar) ;
+        setSupportActionBar(tb);
+
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        getMenuInflater().inflate(R.menu.action_bar, menu);
+        // 검색 버튼 클릭했을 때 searchview 길이 꽉차게 늘려주기
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    //아이템 선택시 액션 주기/
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()){
+            case R.id.action_setting:
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+
+        }
+    }
 
     public static void setupFm(FragmentManager fragmentManager, ViewPager viewPager){
         FragmentAdapter Adapter = new FragmentAdapter(fragmentManager);

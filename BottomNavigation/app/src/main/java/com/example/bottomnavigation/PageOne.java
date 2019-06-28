@@ -4,13 +4,18 @@ package com.example.bottomnavigation;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ListView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,6 +36,13 @@ public class PageOne extends Fragment {
     String json;
     Integer size;
 
+    private List<Data> list;          // 데이터를 넣은 리스트변수
+    private ListView listView;          // 검색을 보여줄 리스트변수
+    private EditText editSearch;        // 검색어를 입력할 Input 창
+    private RecyclerView recyclerView;
+    private ArrayList<Data> arraylist;
+
+
     public PageOne() {
         // Required empty public constructor
     }
@@ -40,7 +52,7 @@ public class PageOne extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View fragment_one = inflater.inflate(R.layout.fragment_one, container, false);
-        RecyclerView recyclerView =fragment_one.findViewById(R.id.recyclerView);
+        RecyclerView recyclerView = fragment_one.findViewById(R.id.recyclerView);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -49,30 +61,86 @@ public class PageOne extends Fragment {
         recyclerView.setAdapter(adapter);
         getData();
         setData();
+
+        editSearch = (EditText) fragment_one.findViewById(R.id.editSearch);
+        recyclerView = (RecyclerView) fragment_one.findViewById(R.id.recyclerView);
+
+        arraylist = new ArrayList<Data>();
+        arraylist.addAll(list);
+
+        for(int i = 0; i < arraylist.size(); i++) {
+            System.out.println(arraylist.get(i).getTitle());
+        }
+
+        // TextEdit에 텍스트가 변경될 경우 실행되는 Listener이다.
+        editSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            // 텍스트가 하나 입력될때마다 실행된다.
+            @Override
+            public void afterTextChanged(Editable editable) {
+            String text = editSearch.getText().toString();
+            System.out.println(text);
+            search(text);
+            }
+        });
+
         return fragment_one;
     }
+    public void search(String charText){
 
+        // 리스트 클리어 및 adapter에 있는 아이템 리셋.
+        list.clear();
+        adapter.resetItem();
+
+        if (charText.length() == 0){
+            list.addAll(arraylist);
+            System.out.println("A");
+        }
+
+        else{
+            for(int i = 0; i < arraylist.size(); i++){
+                System.out.println(arraylist.get(i).getTitle().toLowerCase());
+                if(arraylist.get(i).getTitle().toLowerCase().contains(charText)){
+                    System.out.println("C");
+                    list.add(arraylist.get(i));
+                }
+            }
+        }
+        for(int i = 0; i < list.size(); i++){
+            adapter.addItem(list.get(i));
+        }
+        adapter.notifyDataSetChanged();
+    }
     private void getData() {
         try {
             // JSON객체 만들기.
             JSONObject data1 = new JSONObject();
             data1.put("image",R.drawable.sample_1);
-            data1.put("name","정성운");
+            data1.put("name","Jeong");
             data1.put("number","010-1234-5678");
 
             JSONObject data2 = new JSONObject();
             data2.put("image",R.drawable.sample_2);
-            data2.put("name","김철수");
+            data2.put("name","Kim");
             data2.put("number","010-4321-7654");
 
             JSONObject data3 = new JSONObject();
             data3.put("image",R.drawable.sample_3);
-            data3.put("name","김영희");
+            data3.put("name","YeongHee");
             data3.put("number","010-9876-5432");
 
             JSONObject data4 = new JSONObject();
             data4.put("image",R.drawable.sample_4);
-            data4.put("name","홍길동");
+            data4.put("name","GilDong");
             data4.put("number","010-1234-4321");
 
             //만든 객체 JSONArray에 추가.
@@ -87,6 +155,7 @@ public class PageOne extends Fragment {
             userInfo.put("userInfo",arr);
 
             json = userInfo.toString();
+            System.out.println(json);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -103,6 +172,7 @@ public class PageOne extends Fragment {
         List<String> listTitle = new ArrayList<>();
         List<String> listContent = new ArrayList<>();
         List<Integer> listResId = new ArrayList<>();
+        list = new ArrayList<Data>();
 
         try {
             // 한줄의 스트링으로 된 JSON을 파싱하는 과정
@@ -115,6 +185,7 @@ public class PageOne extends Fragment {
 
             // JSONArray를 이용해서 list타입에 저장시키기. (get하기 위해 try-catch문 필요)
             for (int i = 0; i < userarray.length(); i++) {
+                System.out.println(userarray.getJSONObject(i));
                 String image = userarray.getJSONObject(i).getString("image");
                 String name = userarray.getJSONObject(i).getString("name");
                 String number = userarray.getJSONObject(i).getString("number");
@@ -134,7 +205,11 @@ public class PageOne extends Fragment {
             data.setResId(listResId.get(i));
 
             // 각 값이 들어간 data를 adapter에 추가합니다.
-            adapter.addItem(data);
+            list.add(data);
+        }
+
+        for (int i = 0; i < list.size(); i++){
+            adapter.addItem(list.get(i));
         }
 
         // adapter의 값이 변경되었다는 것을 알려줍니다.

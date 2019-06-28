@@ -3,6 +3,7 @@ package com.example.bottomnavigation;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,6 +17,18 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ItemVi
     // adapter에 들어갈 list 입니다.
     private ArrayList<Data> listData = new ArrayList<>();
 
+    private Button btnTest; // 테스트용 버튼
+
+    public interface OnItemClickListener {
+        public void onItemClick(View view, int position);
+    }
+
+    private OnItemClickListener onItemClickListener;
+
+    public RecyclerAdapter(OnItemClickListener onItemClickListener){
+        this.onItemClickListener = onItemClickListener;
+    }
+
     @NonNull
     @Override
     public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -28,7 +41,15 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ItemVi
     @Override
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
         // Item을 하나, 하나 보여주는(bind 되는) 함수입니다.
+        final int Position = position;
         holder.onBind(listData.get(position));
+        RecyclerAdapter.ItemViewHolder vholder = (RecyclerAdapter.ItemViewHolder)holder;
+        vholder.getBtnTest().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onItemClickListener.onItemClick(v, Position);
+            }
+        });
     }
 
     @Override
@@ -57,9 +78,14 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ItemVi
         ItemViewHolder(View itemView) {
             super(itemView);
 
+            btnTest  = itemView.findViewById(R.id.call_button);
             textView1 = itemView.findViewById(R.id.textView1);
             textView2 = itemView.findViewById(R.id.textView2);
             imageView = itemView.findViewById(R.id.imageView);
+        }
+
+        public Button getBtnTest() {
+            return btnTest;
         }
 
         void onBind(Data data) {

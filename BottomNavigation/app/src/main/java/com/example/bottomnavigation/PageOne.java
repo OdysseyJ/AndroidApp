@@ -1,6 +1,8 @@
 package com.example.bottomnavigation;
 
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -14,6 +16,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
@@ -57,9 +60,18 @@ public class PageOne extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        adapter = new RecyclerAdapter();
-        recyclerView.setAdapter(adapter);
         getData();
+        adapter = new RecyclerAdapter(new RecyclerAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:"+arraylist.get(position).getContent()));
+                //Intent intent = new Intent(Intent.ACTION_CALL,Uri.parse("tel:12345"));
+                startActivity(intent);
+            }
+        });
+        recyclerView.setAdapter(adapter);
         setData();
 
         editSearch = (EditText) fragment_one.findViewById(R.id.editSearch);
@@ -92,7 +104,6 @@ public class PageOne extends Fragment {
             search(text);
             }
         });
-
         return fragment_one;
     }
     public void search(String charText){
@@ -124,22 +135,22 @@ public class PageOne extends Fragment {
         try {
             // JSON객체 만들기.
             JSONObject data1 = new JSONObject();
-            data1.put("image",R.drawable.sample_1);
+            data1.put("image",R.drawable.man_icon);
             data1.put("name","Jeong");
             data1.put("number","010-1234-5678");
 
             JSONObject data2 = new JSONObject();
-            data2.put("image",R.drawable.sample_2);
+            data2.put("image",R.drawable.woman_icon);
             data2.put("name","Kim");
             data2.put("number","010-4321-7654");
 
             JSONObject data3 = new JSONObject();
-            data3.put("image",R.drawable.sample_3);
+            data3.put("image",R.drawable.man_icon);
             data3.put("name","YeongHee");
             data3.put("number","010-9876-5432");
 
             JSONObject data4 = new JSONObject();
-            data4.put("image",R.drawable.sample_4);
+            data4.put("image",R.drawable.woman_icon);
             data4.put("name","GilDong");
             data4.put("number","010-1234-4321");
 

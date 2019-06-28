@@ -132,6 +132,7 @@ public class PageTwo extends Fragment {
 
             myArray.remove(selectedPhoto);
             adapter.removeItem(selectedPhoto);
+            selectedPhoto = "";
             adapter.notifyDataSetChanged();
         }
     }

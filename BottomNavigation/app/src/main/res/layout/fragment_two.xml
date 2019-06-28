@@ -9,6 +9,19 @@
         android:layout_width="match_parent"
         android:layout_height="154dp" />
 
+    <Button
+        android:id="@+id/btn_capture"
+        android:text="사진찍기"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/btn_album"
+        android:text="앨범에서 등록"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        />
+
     <ImageView
         android:id="@+id/image"
         android:layout_width="match_parent"

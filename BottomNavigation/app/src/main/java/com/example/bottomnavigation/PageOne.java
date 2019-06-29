@@ -34,12 +34,12 @@ import java.util.List;
  */
 public class PageOne extends Fragment {
 
-    private RecyclerAdapter adapter;
+    private static RecyclerAdapter adapter;
 
-    String json;
+    static String json;
     Integer size;
 
-    private List<Data> list;          // 데이터를 넣은 리스트변수
+    private static List<Data> list;          // 데이터를 넣은 리스트변수
     private ListView listView;          // 검색을 보여줄 리스트변수
     private EditText editSearch;        // 검색어를 입력할 Input 창
     private RecyclerView recyclerView;
@@ -131,7 +131,9 @@ public class PageOne extends Fragment {
         }
         adapter.notifyDataSetChanged();
     }
-    private void getData() {
+
+    static JSONArray arr = new JSONArray();
+    private static void getData() {
         try {
             // JSON객체 만들기.
             JSONObject data1 = new JSONObject();
@@ -155,7 +157,7 @@ public class PageOne extends Fragment {
             data4.put("number","010-1234-4321");
 
             //만든 객체 JSONArray에 추가.
-            JSONArray arr = new JSONArray();
+            //JSONArray arr = new JSONArray();
             arr.put(data1);
             arr.put(data2);
             arr.put(data3);
@@ -171,6 +173,28 @@ public class PageOne extends Fragment {
             e.printStackTrace();
         }
     }
+    public static void AddData(String name, String number) {
+        try {
+            // JSON객체 만들기.
+            arr = new JSONArray();
+            adapter.resetItem();
+
+            JSONObject new_data = new JSONObject();
+            new_data.put("image",R.drawable.man_icon);
+            new_data.put("name",name);
+            new_data.put("number",number);
+
+            //만든 객체 JSONArray에 추가.
+
+            arr.put(new_data);
+
+            getData();
+            setData();
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
 
     // SetData 메서드
     // 한줄의 String으로 이루어진 JSON자료를 파싱해서 Recycler 어댑터에 전달.
@@ -178,7 +202,7 @@ public class PageOne extends Fragment {
     // 라는 JSON 형태의 String을 Data 객체에
     // Title = "정성운", Content = "010-1234-5678", resId = "2131165304"의 꼴로 저장시킨다.
     // 이후 Data객체를 Recycler Adapter에 전달.
-    private void setData(){
+    private static void setData(){
         // JSON Parsing을 위한 ArrayList
         List<String> listTitle = new ArrayList<>();
         List<String> listContent = new ArrayList<>();

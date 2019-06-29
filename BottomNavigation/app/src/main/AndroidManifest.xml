@@ -26,6 +26,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".PopupActivity"></activity>
+
+        <activity android:name=".NamePopupActivity"></activity>
 
         <provider
             android:name="androidx.core.content.FileProvider"

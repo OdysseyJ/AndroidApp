@@ -3,6 +3,7 @@ package com.example.bottomnavigation;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -27,6 +28,7 @@ import android.widget.Gallery;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Vector;
 import java.util.concurrent.TimeUnit;
 
@@ -51,7 +53,7 @@ public class PageThree extends Fragment {
     Disposable disposable;
     int now;
     Handler handler;
-    int first = 0;
+    long second, milisecond;
 
     public PageThree() {
         // Required empty public constructor
@@ -84,6 +86,8 @@ public class PageThree extends Fragment {
                     long sec = s / 100;
                     long milli = s % 100;
                     getActivity().runOnUiThread(() -> binding.timeTxtView.setText(sec + " : " + milli));
+                    second = sec;
+                    milisecond = milli;
                 });
 
     }
@@ -92,7 +96,24 @@ public class PageThree extends Fragment {
         CompositeDisposable disposable = new CompositeDisposable();
         disposable.add(this.disposable);
         disposable.dispose();
+
+
+        //완료되면 명예의전당 팝업창 띄우기
+        Intent intent = new Intent(getActivity(), PopupActivity.class);
+        intent.putExtra("sec", Double.toString(second));
+        intent.putExtra("mil", Double.toString(milisecond));
+        getActivity().startActivity(intent);
     }
+
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, Intent data){
+//        if (requestCode==1){
+//            if(resultCode==1111){
+//
+//            }
+//        }
+//    }
+
 
     @Override
     public void onDestroy() {
@@ -155,7 +176,7 @@ public class PageThree extends Fragment {
                                 }
                                 adapter.notifyItemChanged(position);
                             } else {
-                                Toast.makeText(getActivity(), "다시 시도해주세요.", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(), "순서대로 선택해주세요.", Toast.LENGTH_SHORT).show();
                             }
                             if (now == 51) stop();
                         }

@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.SearchView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -71,7 +72,6 @@ public class PageOne extends Fragment {
         });
         recyclerView.setAdapter(adapter);
         setData();
-
         editSearch = (EditText) fragment_one.findViewById(R.id.editSearch);
         recyclerView = (RecyclerView) fragment_one.findViewById(R.id.recyclerView);
 

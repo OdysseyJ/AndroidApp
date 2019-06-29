@@ -24,11 +24,14 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
 
     ViewPager viewPager;
     BottomNavigationView navigation;
     private static final int MY_PERMISSION_STORAGE = 1111;
+
 
     //ImageID
     Integer[] imageIDs = ImageAdapter.imageIDs;

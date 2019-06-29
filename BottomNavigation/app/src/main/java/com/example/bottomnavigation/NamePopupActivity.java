@@ -7,7 +7,9 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -17,7 +19,9 @@ public class NamePopupActivity extends AppCompatActivity {
 
     RewardRecyclerAdapter rewardRecyclerAdapter;
 
-    Button returnBtn;
+    Button okBtn;
+
+    private EditText nameText;
 
 
     @Override
@@ -25,43 +29,33 @@ public class NamePopupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         //타이틀바 없애기
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.resultaward);
+        setContentView(R.layout.namepopup);
 
         //UI 객체생성
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.awardrecyclerView);
+        nameText = (EditText) findViewById(R.id.rankName);
+        okBtn = (Button) findViewById(R.id.okButton);
 
-        //데이터 가져오기
-        Intent intent = getIntent();
-        String sec = intent.getStringExtra("sec");
-        String mil = intent.getStringExtra("mil");
-
-        rewardRecyclerAdapter = new RewardRecyclerAdapter();
-        RewardData temp = new RewardData(sec,mil);
-        rewardRecyclerAdapter.addItem(temp);
-
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(rewardRecyclerAdapter);
-        rewardRecyclerAdapter.notifyDataSetChanged();
-
-        returnBtn = (Button) findViewById(R.id.button_return);
-        returnBtn.setOnClickListener(new View.OnClickListener() {
+        //버튼 눌렀을때
+        okBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                //데이터 반환하기.
+                String data = nameText.getText().toString();
+                // 이름에 아무것도 입력 안했을 경우
+                if (data.equals("")){
+                    Toast.makeText(getApplicationContext(), "이름을 입력하세요.", Toast.LENGTH_SHORT).show();
+                }
+                //이름값이 제대로 들어온 경우
+                else {
+                    Intent intent = new Intent();
+                    intent.putExtra("name", data);
+                    setResult(1111, intent);
+
+                    //끝낸다.
+                    finish();
+                }
             }
         });
-    }
-
-    //확인 버튼 클릭
-    public void mOnClose(View v){
-        //데이터 전달하기
-        Intent intent = new Intent();
-        intent.putExtra("result", "Close Popup");
-        setResult(RESULT_OK, intent);
-
-        //액티비티(팝업) 닫기
-        finish();
     }
 
     @Override

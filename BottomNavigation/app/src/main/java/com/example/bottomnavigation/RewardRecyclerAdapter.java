@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class RewardRecyclerAdapter extends RecyclerView.Adapter<RewardRecyclerAdapter.ItemViewHolder2> {
 
@@ -22,7 +23,6 @@ public class RewardRecyclerAdapter extends RecyclerView.Adapter<RewardRecyclerAd
     }
 
     private OnItemClickListener onItemClickListener;
-
 
     @NonNull
     @Override
@@ -37,22 +37,30 @@ public class RewardRecyclerAdapter extends RecyclerView.Adapter<RewardRecyclerAd
     public void onBindViewHolder(@NonNull ItemViewHolder2 holder, int position) {
         // Item을 하나, 하나 보여주는(bind 되는) 함수입니다.
         final int Position = position;
-        holder.onBind(listData.get(position));
+        holder.onBind(listData.get(position), position+1);
     }
 
     @Override
     public int getItemCount() {
         // RecyclerView의 총 개수 입니다.
-        return listData.size();
+        if (listData.size()<5) {
+            return listData.size();
+        }
+        else{
+            return 5;
+        }
     }
 
     void addItem(RewardData data) {
         // 외부에서 item을 추가시킬 함수입니다.
         listData.add(data);
-        sort();
+        Collections.sort(listData);
     }
 
-    void sort() {}
+    RewardData getFirstItem() {
+        return listData.get(0);
+    }
+
     void resetItem(){
         listData.clear();
     }
@@ -61,19 +69,25 @@ public class RewardRecyclerAdapter extends RecyclerView.Adapter<RewardRecyclerAd
     // 여기서 subView를 setting 해줍니다.
     class ItemViewHolder2 extends RecyclerView.ViewHolder {
 
+        //랭크
         private TextView rewardtextView1;
+        //이름
         private TextView rewardtextView2;
+        //시간
+        private TextView rewardtextView3;
 
         ItemViewHolder2(View itemView) {
             super(itemView);
             rewardtextView1 = itemView.findViewById(R.id.rewardtextView1);
             rewardtextView2 = itemView.findViewById(R.id.rewardtextView2);
+            rewardtextView3 = itemView.findViewById(R.id.rewardtextView3);
         }
 
-        void onBind(RewardData data) {
-            System.out.println("onbound########################");
-            rewardtextView1.setText(data.getSec());
-            rewardtextView2.setText(data.getMil());
+        void onBind(RewardData data, int position) {
+            rewardtextView1.setText(Integer.toString(position));
+            rewardtextView2.setText(data.getName());
+            String temp = data.getSec() + "초 " + data.getMil();
+            rewardtextView3.setText(temp);
         }
     }
 }

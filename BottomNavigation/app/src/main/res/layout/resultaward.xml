@@ -19,10 +19,11 @@
 
             <TextView
                 android:id="@+id/textView4"
-                android:layout_width="128dp"
+                android:layout_width="wrap_content"
                 android:layout_height="69dp"
+                android:gravity="center"
                 android:text="명예의 전당"
-                android:gravity="center_horizontal"/>
+                android:textSize="30sp" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/awardrecyclerView"

@@ -26,6 +26,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.Gallery;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -53,7 +54,13 @@ public class PageThree extends Fragment {
     Disposable disposable;
     int now;
     Handler handler;
-    long second, milisecond;
+
+    // 유저 게임 결과
+    long second, msecond;
+    long milisecond, mmilisecond;
+    String userName;
+
+    int timeset = 0;
 
     public PageThree() {
         // Required empty public constructor
@@ -70,8 +77,10 @@ public class PageThree extends Fragment {
         init();
         binding.retryBtn.setOnClickListener(view -> {
             stop();
+            msecond = second;
+            mmilisecond = milisecond;
+            timeset = 1;
             init();
-
         });
         View view = binding.getRoot();
         return view;
@@ -85,34 +94,44 @@ public class PageThree extends Fragment {
                 .subscribe(s -> {
                     long sec = s / 100;
                     long milli = s % 100;
+                    if (timeset ==0) {
+                        second = sec;
+                        milisecond = milli;
+                    }
                     getActivity().runOnUiThread(() -> binding.timeTxtView.setText(sec + " : " + milli));
-                    second = sec;
-                    milisecond = milli;
                 });
-
     }
 
     private void stop() {
         CompositeDisposable disposable = new CompositeDisposable();
         disposable.add(this.disposable);
         disposable.dispose();
-
-
-        //완료되면 명예의전당 팝업창 띄우기
-        Intent intent = new Intent(getActivity(), PopupActivity.class);
-        intent.putExtra("sec", Double.toString(second));
-        intent.putExtra("mil", Double.toString(milisecond));
-        getActivity().startActivity(intent);
     }
 
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode, Intent data){
-//        if (requestCode==1){
-//            if(resultCode==1111){
-//
-//            }
-//        }
-//    }
+    // 다른 액티비티 다녀온후 결과 처리
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        // 이름 받아오는 액티비티 무사히 갔다올 경우
+        if (requestCode==1){
+            if(resultCode==1111){
+                //이름값 인텐트에서 뽑아서 저장시키기, 이후 RewardActivity로 이동시킴.
+                userName = data.getStringExtra("name");
+                moveRewardActivity();
+            }
+        }
+        // ranking 보는 액티비티 무사히 다녀올 경우
+        else if (requestCode==2){
+            if(resultCode==2222){
+
+                String topUserName = data.getStringExtra("name");
+                String topUserSec = data.getStringExtra("sec");
+                String topUserMil = data.getStringExtra("mil");
+                TextView rank1 = (TextView) getActivity().findViewById(R.id.rank1Text);
+                String temp = "현재1등 : "+topUserName+" "+topUserSec + "초 " + topUserMil;
+                rank1.setText(temp);
+            }
+        }
+    }
 
 
     @Override
@@ -124,6 +143,7 @@ public class PageThree extends Fragment {
         timer();
         binding.gridView.removeOnItemTouchListener(select);
         now = 1;
+        timeset = 0;
         _1to25 = new Vector<>();
         _26to50 = new Vector<>();
         binding.gridView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
@@ -178,7 +198,10 @@ public class PageThree extends Fragment {
                             } else {
                                 Toast.makeText(getActivity(), "순서대로 선택해주세요.", Toast.LENGTH_SHORT).show();
                             }
-                            if (now == 51) stop();
+                            if (now == 51) {
+                                stop();
+                                moveNameInputActivity();
+                            }
                         }
                         break;
                 }
@@ -197,8 +220,31 @@ public class PageThree extends Fragment {
         public void onRequestDisallowInterceptTouchEvent(boolean b) {
 
         }
+
     };
 
+    // 이름값 받아오기
+    public void moveNameInputActivity(){
+        //완료되면 명예의전당 팝업창 띄우기
+        Intent intent = new Intent(getActivity(), NamePopupActivity.class);
+        startActivityForResult(intent,1);
+    }
+
+    // 이름값 받아온거 + 시간초까지 같이 넘겨서 저장시키고
+    // TOP 플레이어 정보를 받아온다.
+    public void moveRewardActivity(){
+        Intent intent = new Intent(getActivity(), PopupActivity.class);
+
+        System.out.println("#####################3");
+        System.out.println("#####################3");
+        System.out.println(second);
+        System.out.println(milisecond);
+        System.out.println("#####################3");
+        intent.putExtra("sec", Double.toString(second));
+        intent.putExtra("mil", Double.toString(milisecond));
+        intent.putExtra("name", userName);
+        startActivityForResult(intent,2);
+    }
 
 
 

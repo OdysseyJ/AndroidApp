@@ -32,41 +32,34 @@ public class PopupActivity extends AppCompatActivity {
 
         //데이터 가져오기
         Intent intent = getIntent();
+        String name = intent.getStringExtra("name");
         String sec = intent.getStringExtra("sec");
         String mil = intent.getStringExtra("mil");
 
         rewardRecyclerAdapter = new RewardRecyclerAdapter();
-        RewardData temp = new RewardData(sec,mil);
+        RewardData temp = new RewardData(name,sec,mil);
         rewardRecyclerAdapter.addItem(temp);
-        System.out.println("################################");
-        System.out.println("################################");
-        System.out.println(rewardRecyclerAdapter.getItemCount());
-        System.out.println("################################");
-        System.out.println("################################");
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(rewardRecyclerAdapter);
         rewardRecyclerAdapter.notifyDataSetChanged();
 
+
         returnBtn = (Button) findViewById(R.id.button_return);
         returnBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                RewardData topUser = rewardRecyclerAdapter.getFirstItem();
+                Intent intent = new Intent();
+                intent.putExtra("name", topUser.getName());
+                intent.putExtra("sec", topUser.getSec());
+                intent.putExtra("mil", topUser.getMil());
+                setResult(2222, intent);
+                //끝낸다.
                 finish();
             }
         });
-    }
-
-    //확인 버튼 클릭
-    public void mOnClose(View v){
-        //데이터 전달하기
-        Intent intent = new Intent();
-        intent.putExtra("result", "Close Popup");
-        setResult(RESULT_OK, intent);
-
-        //액티비티(팝업) 닫기
-        finish();
     }
 
     @Override

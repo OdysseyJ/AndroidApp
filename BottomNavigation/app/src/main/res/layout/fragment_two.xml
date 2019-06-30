@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/colorPrimary"
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -14,38 +15,55 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:orientation="horizontal">
+
+                <Button
+
+                    android:id="@+id/btn_album"
+                    android:layout_width="120dp"
+                    android:layout_height="80dp"
+                    android:background="#FFFFFF"
+                    android:drawableTop="@drawable/mr_button_light"
+                    android:text="갤러리" />
+
+                <Button
+                    android:id="@+id/btn_capture"
+                    android:layout_width="159dp"
+                    android:layout_height="80dp"
+                    android:background="#FFFFFF"
+                    android:drawableTop="@drawable/ic_mr_button_connected_01_light"
+                    android:gravity="center|clip_vertical|center_horizontal|center_vertical"
+                    android:text="카메라" />
+
+                <Button
+                    android:id="@+id/btn_remove"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:background="#FFFFFF"
+                    android:drawableTop="@drawable/mr_button_light"
+                    android:gravity="center|clip_vertical|center_horizontal|center_vertical"
+                    android:text="삭제" />
+
+            </LinearLayout>
+
             <Gallery
                 android:id="@+id/gallery"
                 android:layout_width="match_parent"
-                android:layout_height="100dp">
+                android:layout_height="190dp">
 
             </Gallery>
 
             <ImageView
                 android:id="@+id/image"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="340dp"
                 android:layout_gravity="bottom"
                 android:baselineAlignBottom="true" />
 
-            <Button
-                android:id="@+id/btn_album"
-                android:layout_width="match_parent"
-                android:layout_height="62dp"
-                android:layout_gravity="bottom"
-                android:text="앨범에서 등록" />
-
-            <Button
-                android:id="@+id/btn_capture"
-                android:layout_width="match_parent"
-                android:layout_height="65dp"
-                android:text="사진찍기" />
-
-            <Button
-                android:id="@+id/btn_remove"
-                android:layout_width="match_parent"
-                android:layout_height="68dp"
-                android:text="선택사진삭제" />
 
         </LinearLayout>
 

@@ -152,8 +152,6 @@ public class PageTwo extends Fragment {
                 }
                 if (photoFile != null) {
 // getUriForFile의 두 번째 인자는 Manifest provier의 authorites와 일치해야 함
-                    System.out.println(getActivity());
-                    System.out.println(getActivity().getPackageName());
                     Uri providerURI = FileProvider.getUriForFile(getActivity(), getActivity().getPackageName(), photoFile);
                     imageUri = providerURI;
 // 인텐트에 전달할 때는 FileProvier의 Return값인 content://로만!!, providerURI의 값에 카메라 데이터를 넣어 보냄

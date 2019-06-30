@@ -66,6 +66,11 @@ public class PageThree extends Fragment {
         // Required empty public constructor
     }
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+       timer();
+    }
 
     @Nullable
     @Override
@@ -74,12 +79,13 @@ public class PageThree extends Fragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_three, container, false);
        // binding = DataBindingUtil.setContentView(getActivity(), R.layout.fragment_three);
         handler = new Handler();
-        init();
+       init();
         binding.retryBtn.setOnClickListener(view -> {
             stop();
             msecond = second;
             mmilisecond = milisecond;
             timeset = 1;
+            timer();
             init();
         });
         View view = binding.getRoot();
@@ -140,7 +146,6 @@ public class PageThree extends Fragment {
         stop();
     }
     private void init() {
-        timer();
         binding.gridView.removeOnItemTouchListener(select);
         now = 1;
         timeset = 0;
@@ -235,11 +240,6 @@ public class PageThree extends Fragment {
     public void moveRewardActivity(){
         Intent intent = new Intent(getActivity(), PopupActivity.class);
 
-        System.out.println("#####################3");
-        System.out.println("#####################3");
-        System.out.println(second);
-        System.out.println(milisecond);
-        System.out.println("#####################3");
         intent.putExtra("sec", Double.toString(second));
         intent.putExtra("mil", Double.toString(milisecond));
         intent.putExtra("name", userName);

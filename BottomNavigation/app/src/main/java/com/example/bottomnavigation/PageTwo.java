@@ -99,7 +99,7 @@ public class PageTwo extends Fragment {
         });
 
         btn_album.setOnClickListener(new View.OnClickListener() {
-            @OverrideNavi
+            @Override
             public void onClick(View v) {
                 getAlbum();
             }

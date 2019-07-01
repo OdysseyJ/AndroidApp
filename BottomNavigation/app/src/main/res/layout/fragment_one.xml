@@ -11,6 +11,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="20dp"
         android:orientation="vertical">
 
         <LinearLayout
@@ -22,19 +23,25 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <Button
+            <ImageButton
                 android:id="@+id/addButton"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:background="@drawable/usericon"
-                android:gravity="right" />
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_margin="3dp"
+                android:background="@android:color/transparent"
+                android:gravity="right"
+                android:scaleType="centerCrop"
+                android:src="@drawable/user_new" />
 
-            <Button
-                android:id="@+id/deleteButton"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:background="@drawable/ic_dialog_close_light"
-                android:gravity="right" />
+            <ImageButton
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_margin="3dp"
+                android:background="@android:color/transparent"
+                android:gravity="right"
+                android:scaleType="centerCrop"
+                android:src="@drawable/trashicon" />
+
 
         </LinearLayout>
 

@@ -26,10 +26,10 @@
             <TextView
                 android:id="@+id/textView4"
                 android:layout_width="wrap_content"
-                android:layout_height="69dp"
+                android:layout_height="59dp"
                 android:gravity="center"
                 android:text="명예의 전당"
-                android:textSize="30sp" />
+                android:textSize="24sp" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/awardrecyclerView"
@@ -40,9 +40,10 @@
 
             <Button
                 android:id="@+id/button_return"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="돌아가기" />
+                android:layout_width="69dp"
+                android:layout_height="38dp"
+                android:background="@color/colorPrimary"
+                android:text="다시하기" />
         </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

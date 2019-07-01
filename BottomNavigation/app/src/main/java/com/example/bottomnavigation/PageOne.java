@@ -28,6 +28,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -56,7 +57,7 @@ public class PageOne extends Fragment {
     private EditText editSearch;        // 검색어를 입력할 Input 창
     private ArrayList<ContactItem> contactItems;
 
-    private Button addButton;
+    private ImageButton addButton;
 
     private final int ADD_RESULT = 22222;
 
@@ -88,7 +89,7 @@ public class PageOne extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        addButton = (Button) fragment_one.findViewById(R.id.addButton);
+        addButton = (ImageButton) fragment_one.findViewById(R.id.addButton);
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

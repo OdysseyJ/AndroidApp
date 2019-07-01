@@ -24,7 +24,7 @@
         android:layout_alignParentRight="true"
         android:layout_marginLeft="30dp"
         android:layout_marginTop="-190dp"
-        android:layout_marginRight="40dp"
+        android:layout_marginRight="20dp"
         android:background="@drawable/gamebtn"
         android:onClick="onAddButtonClicked"
         android:text="Add" />
@@ -35,33 +35,33 @@
         android:layout_height="89dp"
         android:layout_below="@id/button"
         android:layout_alignParentLeft="false"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="33dp"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="40dp"
         android:background="@android:color/transparent"
-        android:scaleType="fitCenter"
         android:onClick="onPhotoButtonClicked"
+        android:scaleType="fitCenter"
         android:src="@drawable/img_134042" />
 
     <EditText
         android:id="@+id/editName"
-        android:layout_width="wrap_content"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/button"
         android:layout_alignParentRight="true"
         android:layout_marginTop="30dp"
-        android:layout_marginRight="40dp"
+        android:layout_marginRight="20dp"
         android:ems="10"
         android:hint="Text Name"
         android:inputType="textPersonName" />
 
     <EditText
         android:id="@+id/editPhone"
-        android:layout_width="wrap_content"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/editName"
         android:layout_alignParentRight="true"
         android:layout_marginTop="13dp"
-        android:layout_marginRight="40dp"
+        android:layout_marginRight="20dp"
         android:ems="10"
         android:hint="Text Phone number"
         android:inputType="phone" />

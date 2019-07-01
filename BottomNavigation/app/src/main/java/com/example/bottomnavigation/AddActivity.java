@@ -74,6 +74,9 @@ public class AddActivity extends AppCompatActivity {
 
             Toast.makeText(getApplicationContext(), "연락처에 추가되었습니다.", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent();
+            intent.putExtra("name", newName);
+            intent.putExtra("phone", newPhone);
+            intent.putExtra("uri", photoURI);
             setResult(RESULT_OK, intent);
             finish();
         }
@@ -138,10 +141,7 @@ public class AddActivity extends AppCompatActivity {
     }
 
     public void ContactsIDinsert(ContentResolver cr, Context context, String strName, String strMobileNO) {
-        new Thread(){
-            @Override
-            public void run(){
-                System.out.println("Contacts INsert");
+
 
                 ArrayList<ContentProviderOperation> ops = new ArrayList<ContentProviderOperation>();
                 ops.add(ContentProviderOperation.newInsert(ContactsContract.RawContacts.CONTENT_URI)
@@ -162,8 +162,6 @@ public class AddActivity extends AppCompatActivity {
                         .withValue(ContactsContract.CommonDataKinds.Phone.TYPE, ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE)
                         .build());
 
-
-                System.out.println("Add INsert");
 
                 // Uri - bitmap 변환
                 Bitmap bitmap = null;
@@ -194,8 +192,6 @@ public class AddActivity extends AppCompatActivity {
                         .withValue(ContactsContract.CommonDataKinds.Photo.PHOTO, bytes)
                         .build());
 
-                System.out.println("Add Photo");
-
                 try {
                     context.getContentResolver().applyBatch(ContactsContract.AUTHORITY, ops);
                     System.out.println("applybatch");
@@ -207,7 +203,6 @@ public class AddActivity extends AppCompatActivity {
                 } catch (Exception e) {
                     Log.e("ContactsAdder", "Exceptoin encoutered while inserting contact: " + e);
                 }
-            }
-        }.start();
+
     }
 }

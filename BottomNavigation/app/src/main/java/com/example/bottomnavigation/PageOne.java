@@ -64,6 +64,17 @@ public class PageOne extends Fragment {
         // Required empty public constructor
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        getData();
+        for(int i = 0; i < contactItems.size(); i++) {
+            System.out.println("PersonID : " + contactItems.get(i).getPerson_id());
+            System.out.println("PhotoID : " + contactItems.get(i).getPhoto_id());
+        }
+        setData();
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -87,14 +98,10 @@ public class PageOne extends Fragment {
             }
         });
 
-        getData();
+//        getData();
         //연락처 데이터 불러오기.
 
         System.out.println(json);
-        for (int i = 0; i < contactItems.size(); i++){
-            System.out.println("##############################################");
-            System.out.println(contactItems.get(i).getUser_Name());
-        }
 
         adapter = new RecyclerAdapter(getContext(), new RecyclerAdapter.OnItemClickListener() {
             @Override
@@ -107,7 +114,7 @@ public class PageOne extends Fragment {
         });
         recyclerView.setAdapter(adapter);
 
-        setData();
+//        setData();
 
         editSearch = (EditText) fragment_one.findViewById(R.id.editSearch);
 
@@ -138,8 +145,11 @@ public class PageOne extends Fragment {
         // 이름 받아오는 액티비티 무사히 갔다올 경우
         if (requestCode==ADD_RESULT){
             if(resultCode== Activity.RESULT_OK){
-                System.out.println("###############################################");
-                refresh();
+                //
+                String UserName = data.getStringExtra("name");
+                String Userphone = data.getStringExtra("phone");
+                String Useruri = data.getStringExtra("uri");
+
             }
         }
     }
@@ -175,7 +185,6 @@ public class PageOne extends Fragment {
 
     //기기 연락처에서 데이터 받아오기.
     private void getData() {
-
         Uri uri = ContactsContract.CommonDataKinds.Phone.CONTENT_URI;
         // 받아올 연락처 타입 4가지
         String[] projection = new String[]{
@@ -246,7 +255,6 @@ public class PageOne extends Fragment {
     // 이후 Data객체를 Recycler Adapter에 전달.
     private void setData(){
         // JSON Parsing을 위한 ArrayList
-        contactItems.clear();
 
         List<String> listUserName = new ArrayList<>();
         List<String> listNumber = new ArrayList<>();
@@ -290,6 +298,8 @@ public class PageOne extends Fragment {
             // 각 값이 들어간 data를 adapter에 추가합니다.
             list.add(contactItem);
         }
+
+        adapter.resetItem();
 
         for (int i = 0; i < list.size(); i++){
             adapter.addItem(list.get(i));

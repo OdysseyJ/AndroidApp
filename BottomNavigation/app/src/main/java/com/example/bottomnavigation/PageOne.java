@@ -82,10 +82,6 @@ public class PageOne extends Fragment {
     public void onResume() {
         super.onResume();
         getData();
-        for(int i = 0; i < contactItems.size(); i++) {
-            System.out.println("PersonID : " + contactItems.get(i).getPerson_id());
-            System.out.println("PhotoID : " + contactItems.get(i).getPhoto_id());
-        }
         setData();
     }
 
@@ -94,10 +90,6 @@ public class PageOne extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View fragment_one = inflater.inflate(R.layout.fragment_one, container, false);
         RecyclerView recyclerView = fragment_one.findViewById(R.id.recyclerView);
-
-
-        System.out.println("oncreateViewcalled");
-
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -112,11 +104,6 @@ public class PageOne extends Fragment {
             }
         });
 
-//        getData();
-        //연락처 데이터 불러오기.
-
-        System.out.println(json);
-
         adapter = new RecyclerAdapter(getContext(), new RecyclerAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
@@ -128,8 +115,9 @@ public class PageOne extends Fragment {
         }, new RecyclerAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-
-                getActivity().getContentResolver().delete(ContactsContract.RawContacts.CONTENT_URI, ContactsContract.RawContacts._ID + " =" + contactItems.get(position).getPerson_id(),null);
+                String where = ContactsContract.RawContacts.CONTACT_ID + "=" + contactItems.get(position).getId();
+                getActivity().getContentResolver().delete(ContactsContract.RawContacts.CONTENT_URI, where, null);
+                refresh();
             }
         });
         recyclerView.setAdapter(adapter);
@@ -165,10 +153,6 @@ public class PageOne extends Fragment {
         // 이름 받아오는 액티비티 무사히 갔다올 경우
         if (requestCode==ADD_RESULT){
             if(resultCode== Activity.RESULT_OK){
-                //
-                String UserName = data.getStringExtra("name");
-                String Userphone = data.getStringExtra("phone");
-                String Useruri = data.getStringExtra("uri");
 
             }
         }
@@ -210,6 +194,7 @@ public class PageOne extends Fragment {
         String[] projection = new String[]{
                 ContactsContract.CommonDataKinds.Phone.NUMBER,
                 ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
+                ContactsContract.CommonDataKinds.Phone.CONTACT_ID,
                 ContactsContract.Contacts.PHOTO_ID,
                 ContactsContract.Contacts._ID
         };
@@ -223,13 +208,15 @@ public class PageOne extends Fragment {
         // 파싱하기.
         if (cursor.moveToFirst()) {
             do {
-                long photo_id = cursor.getLong(2);
-                long person_id = cursor.getLong(3);
+                long contact_id = cursor.getLong(2);
+                long photo_id = cursor.getLong(3);
+                long person_id = cursor.getLong(4);
                 ContactItem contactItem = new ContactItem();
                 contactItem.setUser_phNumber(cursor.getString(0));
                 contactItem.setUser_Name(cursor.getString(1));
                 contactItem.setPhoto_id(photo_id);
                 contactItem.setPerson_id(person_id);
+                contactItem.setId(contact_id);
 
                 hashlist.add(contactItem);
 
@@ -238,9 +225,6 @@ public class PageOne extends Fragment {
 
         // 연락처 받아와서 contactItems에 넣어줌.(클래스 멤버변수)
         contactItems = new ArrayList<>(hashlist);
-        for (int i = 0; i < contactItems.size(); i++) {
-            contactItems.get(i).setId(i);
-        }
 
         try {
             // JSON객체 만들기.
@@ -253,6 +237,7 @@ public class PageOne extends Fragment {
                 data1.put("person_id",contactItems.get(i).getPerson_id());
                 data1.put("name",contactItems.get(i).getUser_Name());
                 data1.put("number",contactItems.get(i).getUser_phNumber());
+                data1.put("contact_id",contactItems.get(i).getId());
                 arr.put(data1);
             }
 
@@ -278,8 +263,9 @@ public class PageOne extends Fragment {
 
         List<String> listUserName = new ArrayList<>();
         List<String> listNumber = new ArrayList<>();
-        List<Integer> listPersonId = new ArrayList<>();
-        List<Integer> listImageId = new ArrayList<>();
+        List<Long> listPersonId = new ArrayList<>();
+        List<Long> listImageId = new ArrayList<>();
+        List<Long> listContactId = new ArrayList<>();
         list = new ArrayList<ContactItem>();
 
         try {
@@ -293,14 +279,16 @@ public class PageOne extends Fragment {
 
             // JSONArray를 이용해서 list타입에 저장시키기. (get하기 위해 try-catch문 필요)
             for (int i = 0; i < userarray.length(); i++) {
-                String photo_id = userarray.getJSONObject(i).getString("photo_id");
-                String person_id = userarray.getJSONObject(i).getString("person_id");
+                Long photo_id = userarray.getJSONObject(i).getLong("photo_id");
+                Long person_id = userarray.getJSONObject(i).getLong("person_id");
                 String name = userarray.getJSONObject(i).getString("name");
                 String number = userarray.getJSONObject(i).getString("number");
+                Long contact_id = userarray.getJSONObject(i).getLong("contact_id");
                 listUserName.add(name);
                 listNumber.add(number);
-                listImageId.add(Integer.parseInt(photo_id));
-                listPersonId.add(Integer.parseInt(person_id));
+                listImageId.add(photo_id);
+                listPersonId.add(person_id);
+                listContactId.add(contact_id);
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -313,6 +301,7 @@ public class PageOne extends Fragment {
             contactItem.setUser_phNumber(listNumber.get(i));
             contactItem.setPerson_id(listPersonId.get(i));
             contactItem.setPhoto_id(listImageId.get(i));
+            contactItem.setId(listContactId.get(i));
 
 
             // 각 값이 들어간 data를 adapter에 추가합니다.

@@ -7,7 +7,7 @@ import java.io.Serializable;
 public class ContactItem implements Serializable {
     private String user_phNumber, user_Name;
     private long photo_id=0, person_id=0;
-    private int id;
+    private long id;
 
     public ContactItem(){}
     public long getPhoto_id(){
@@ -29,10 +29,10 @@ public class ContactItem implements Serializable {
     public String getUser_Name(){
         return user_Name;
     }
-    public void setId(int id){
+    public void setId(long id){
         this.id = id;
     }
-    public int getId(){
+    public long getId(){
         return id;
     }
     public void setUser_phNumber(String string){

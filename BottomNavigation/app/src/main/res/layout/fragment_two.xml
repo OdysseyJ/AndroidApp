@@ -62,9 +62,10 @@
                 android:id="@+id/image"
                 android:layout_width="360dp"
                 android:layout_height="340dp"
-                android:layout_marginTop="10dp"
                 android:layout_gravity="bottom"
-                android:baselineAlignBottom="true" />
+                android:layout_marginTop="10dp"
+                android:baselineAlignBottom="true"
+                app:srcCompat="@drawable/img_d" />
 
         </LinearLayout>
 

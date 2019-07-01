@@ -128,7 +128,7 @@ public class PageTwo extends Fragment {
             mediaScanIntent.setData(contentUri);
             getActivity().sendBroadcast(mediaScanIntent);
 
-            iv_view.setImageResource(R.drawable.select_picture_);
+            iv_view.setImageResource(R.drawable.img_d);
 
             myArray.remove(selectedPhoto);
             adapter.removeItem(selectedPhoto);

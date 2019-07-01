@@ -16,6 +16,19 @@
         android:src="@drawable/back_button"
         android:text="Back" />
 
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editPhone"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="-190dp"
+        android:layout_marginRight="40dp"
+        android:background="@drawable/gamebtn"
+        android:onClick="onAddButtonClicked"
+        android:text="Add" />
+
     <ImageButton
         android:id="@+id/userImage"
         android:layout_width="96dp"
@@ -48,24 +61,13 @@
         android:layout_below="@id/editName"
         android:layout_alignParentRight="true"
         android:layout_marginTop="13dp"
-        android:layout_marginRight="41dp"
+        android:layout_marginRight="40dp"
         android:ems="10"
         android:hint="Text Phone number"
         android:inputType="phone" />
 
 
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/editPhone"
-        android:layout_alignParentRight="true"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="40dp"
-        android:background="@drawable/gamebtn"
-        android:onClick="onAddButtonClicked"
-        android:text="Add" />
+
 
     <!--<Button-->
         <!--android:id="@+id/button3"-->

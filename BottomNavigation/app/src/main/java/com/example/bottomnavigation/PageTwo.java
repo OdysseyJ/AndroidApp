@@ -192,6 +192,7 @@ public class PageTwo extends Fragment {
         intent.setType(android.provider.MediaStore.Images.Media.CONTENT_TYPE);
         startActivityForResult(intent, REQUEST_TAKE_ALBUM);
     }
+
     private void galleryAddPic(){
         Log.i("galleryAddPic", "Call");
         Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);

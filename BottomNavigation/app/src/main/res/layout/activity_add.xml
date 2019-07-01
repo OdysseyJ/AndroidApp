@@ -14,51 +14,59 @@
         android:text="Back" />
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/userImage"
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:layout_below="@id/button"
-        android:layout_alignParentLeft="true"
-        android:src="@drawable/profile"
-        />
+        android:layout_alignParentLeft="false"
+        android:layout_marginTop="85dp"
+        android:src="@drawable/profile" />
 
     <EditText
         android:id="@+id/editName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
         android:layout_below="@id/button"
         android:layout_alignParentRight="true"
-        android:hint="Text Name"/>
+        android:layout_marginTop="127dp"
+        android:layout_marginRight="21dp"
+        android:ems="10"
+        android:hint="Text Name"
+        android:inputType="textPersonName" />
 
     <EditText
         android:id="@+id/editPhone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="phone"
         android:layout_below="@id/editName"
         android:layout_alignParentRight="true"
-        android:hint="Text Phone number"/>
-
-    <EditText
-        android:id="@+id/editEmail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_marginTop="33dp"
+        android:layout_marginRight="25dp"
         android:ems="10"
-        android:inputType="textEmailAddress"
-        android:layout_below="@id/editPhone"
-        android:layout_alignParentRight="true"
-        android:hint="Text Email"/>
+        android:hint="Text Phone number"
+        android:inputType="phone" />
+
 
     <Button
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="onAddButtonClicked"
-        android:text="Add"
+        android:layout_below="@id/editPhone"
         android:layout_alignParentRight="true"
-        android:layout_below="@id/editEmail"/>
+        android:layout_marginTop="-297dp"
+        android:layout_marginRight="3dp"
+        android:onClick="onAddButtonClicked"
+        android:text="Add" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editPhone"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="-42dp"
+        android:layout_marginRight="298dp"
+        android:onClick="onPhotoButtonClicked"
+        android:text="Add Photo" />
 
 </RelativeLayout>

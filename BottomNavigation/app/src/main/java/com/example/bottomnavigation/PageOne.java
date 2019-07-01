@@ -1,6 +1,7 @@
 package com.example.bottomnavigation;
 
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.ContentResolver;
 import android.content.ContentUris;
@@ -24,9 +25,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -46,12 +49,15 @@ public class PageOne extends Fragment {
     private static RecyclerAdapter adapter;
 
     static String json;
-    Integer size;
 
     private List<ContactItem> list;          // 데이터를 넣은 리스트변수
     private ListView listView;          // 검색을 보여줄 리스트변수
     private EditText editSearch;        // 검색어를 입력할 Input 창
     private ArrayList<ContactItem> contactItems;
+
+    private Button addButton;
+
+    private final int ADD_RESULT = 22222;
 
     public PageOne() {
         // Required empty public constructor
@@ -67,6 +73,17 @@ public class PageOne extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
 
+        addButton = (Button) fragment_one.findViewById(R.id.addButton);
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 인텐트 실행시키기.
+                Intent intent = new Intent(getActivity(), AddActivity.class);
+                startActivityForResult(intent,ADD_RESULT);
+            }
+        });
+
+        //연락처 데이터 불러오기.
         getData();
         adapter = new RecyclerAdapter(getContext(), new RecyclerAdapter.OnItemClickListener() {
             @Override
@@ -103,6 +120,18 @@ public class PageOne extends Fragment {
         });
         return fragment_one;
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        // 이름 받아오는 액티비티 무사히 갔다올 경우
+        if (requestCode==ADD_RESULT){
+            if(resultCode== Activity.RESULT_OK){
+                getData();
+                setData();
+            }
+        }
+    }
+
     public void search(String charText){
 
         // 리스트 클리어 및 adapter에 있는 아이템 리셋.
@@ -178,30 +207,6 @@ public class PageOne extends Fragment {
                 data1.put("number",contactItems.get(i).getUser_phNumber());
                 arr.put(data);
             }
-//            data1.put("image",R.drawable.man_icon);
-//            data1.put("name","Jeong");
-//            data1.put("number","010-1234-5678");
-//
-//            JSONObject data2 = new JSONObject();
-//            data2.put("image",R.drawable.woman_icon);
-//            data2.put("name","Kim");
-//            data2.put("number","010-4321-7654");
-//
-//            JSONObject data3 = new JSONObject();
-//            data3.put("image",R.drawable.man_icon);
-//            data3.put("name","YeongHee");
-//            data3.put("number","010-9876-5432");
-//
-//            JSONObject data4 = new JSONObject();
-//            data4.put("image",R.drawable.woman_icon);
-//            data4.put("name","GilDong");
-//            data4.put("number","010-1234-4321");
-//
-//            //만든 객체 JSONArray에 추가.
-//            arr.put(data1);
-//            arr.put(data2);
-//            arr.put(data3);
-//            arr.put(data4);
 
             // userInfo라는 하나의 객체로 Array묶기.
             JSONObject userInfo = new JSONObject();
@@ -212,28 +217,6 @@ public class PageOne extends Fragment {
             e.printStackTrace();
         }
     }
-//    public void AddData(String name, String number) {
-//        try {
-//            // JSON객체 만들기.
-//            arr = new JSONArray();
-//            adapter.resetItem();
-//
-//            JSONObject new_data = new JSONObject();
-//            new_data.put("image",R.drawable.man_icon);
-//            new_data.put("name",name);
-//            new_data.put("number",number);
-//
-//            //만든 객체 JSONArray에 추가.
-//
-//            arr.put(new_data);
-//
-//            getData();
-//            setData();
-//
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//    }
 
     // SetData 메서드
     // 한줄의 String으로 이루어진 JSON자료를 파싱해서 Recycler 어댑터에 전달.
@@ -241,8 +224,6 @@ public class PageOne extends Fragment {
     // 라는 JSON 형태의 String을 Data 객체에
     // Title = "정성운", Content = "010-1234-5678", resId = "2131165304"의 꼴로 저장시킨다.
     // 이후 Data객체를 Recycler Adapter에 전달.
-
-
     private void setData(){
         // JSON Parsing을 위한 ArrayList
         List<String> listUserName = new ArrayList<>();

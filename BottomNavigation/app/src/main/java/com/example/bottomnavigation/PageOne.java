@@ -48,6 +48,19 @@ import java.util.List;
  */
 public class PageOne extends Fragment {
 
+    static final private String[] CONTACTS_PROJECTION = new String[] {
+            ContactsContract.Contacts._ID,     // 0
+            ContactsContract.Contacts.DISPLAY_NAME,   // 1
+            ContactsContract.Contacts.STARRED,    // 2
+            ContactsContract.Contacts.TIMES_CONTACTED,  // 3
+            ContactsContract.Contacts.CONTACT_PRESENCE,  // 4
+            ContactsContract.Contacts.PHOTO_ID,    // 5
+            ContactsContract.Contacts.LOOKUP_KEY,   // 6
+            ContactsContract.Contacts.HAS_PHONE_NUMBER  // 7
+    };
+
+
+
     private static RecyclerAdapter adapter;
 
     static String json;
@@ -109,8 +122,14 @@ public class PageOne extends Fragment {
             public void onItemClick(View view, int position) {
                 Intent intent = new Intent();
                 intent.setAction(Intent.ACTION_DIAL);
-                intent.setData(Uri.parse("tel:"+contactItems.get(position).getUser_phNumber()));
+                intent.setData(Uri.parse("tel:" + contactItems.get(position).getUser_phNumber()));
                 startActivity(intent);
+            }
+        }, new RecyclerAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+
+                getActivity().getContentResolver().delete(ContactsContract.RawContacts.CONTENT_URI, ContactsContract.RawContacts._ID + " =" + contactItems.get(position).getPerson_id(),null);
             }
         });
         recyclerView.setAdapter(adapter);

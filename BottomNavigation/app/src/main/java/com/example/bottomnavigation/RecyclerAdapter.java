@@ -31,6 +31,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ItemVi
     private ArrayList<ContactItem> contactlist = new ArrayList<>();
 
     private ImageButton btnTest; // 테스트용 버튼
+    private ImageButton removeBtn;
     private final Context mContext;
 
     public interface OnItemClickListener {
@@ -38,10 +39,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ItemVi
     }
 
     private OnItemClickListener onItemClickListener;
+    private OnItemClickListener removeItemClickListener;
 
-    public RecyclerAdapter(Context context, OnItemClickListener onItemClickListener){
+    public RecyclerAdapter(Context context, OnItemClickListener onItemClickListener, OnItemClickListener removeItemClickListener){
         mContext = context;
         this.onItemClickListener = onItemClickListener;
+        this.removeItemClickListener = removeItemClickListener;
     }
 
     @NonNull
@@ -59,10 +62,18 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ItemVi
         final int Position = position;
         holder.onBind(contactlist.get(position));
         RecyclerAdapter.ItemViewHolder vholder = (RecyclerAdapter.ItemViewHolder)holder;
+
         vholder.getBtnTest().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onItemClickListener.onItemClick(v, Position);
+            }
+        });
+
+        vholder.getremoveBtn().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                removeItemClickListener.onItemClick(v, Position);
             }
         });
     }
@@ -94,6 +105,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ItemVi
             super(itemView);
 
             btnTest  = itemView.findViewById(R.id.call_button);
+            removeBtn = itemView.findViewById(R.id.remove_button);
             textView1 = itemView.findViewById(R.id.textView1);
             textView2 = itemView.findViewById(R.id.textView2);
             imageView = itemView.findViewById(R.id.imageView);
@@ -101,6 +113,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ItemVi
 
         public ImageButton getBtnTest() {
             return btnTest;
+        }
+        public ImageButton getremoveBtn() {
+            return removeBtn;
         }
 
         void onBind(ContactItem contactItem) {

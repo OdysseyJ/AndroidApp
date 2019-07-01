@@ -31,7 +31,7 @@
                 android:background="@android:color/transparent"
                 android:gravity="right"
                 android:scaleType="centerCrop"
-                android:src="@drawable/plusicon" />
+                android:src="@drawable/user_new" />
 
             <ImageButton
                 android:layout_width="50dp"
@@ -40,7 +40,7 @@
                 android:background="@android:color/transparent"
                 android:gravity="right"
                 android:scaleType="centerCrop"
-                android:src="@drawable/minusicon2" />
+                android:src="@drawable/trashicon" />
 
 
         </LinearLayout>

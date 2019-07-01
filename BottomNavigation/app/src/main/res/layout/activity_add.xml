@@ -16,16 +16,18 @@
         android:src="@drawable/back_button"
         android:text="Back" />
 
-    <ImageView
+    <ImageButton
         android:id="@+id/userImage"
         android:layout_width="96dp"
         android:layout_height="89dp"
         android:layout_below="@id/button"
         android:layout_alignParentLeft="false"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="37dp"
+        android:layout_marginTop="33dp"
         android:background="@android:color/transparent"
-        android:src="@drawable/usericon" />
+        android:scaleType="fitCenter"
+        android:onClick="onPhotoButtonClicked"
+        android:src="@drawable/img_134042" />
 
     <EditText
         android:id="@+id/editName"
@@ -45,8 +47,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/editName"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="21dp"
-        android:layout_marginRight="40dp"
+        android:layout_marginTop="13dp"
+        android:layout_marginRight="41dp"
         android:ems="10"
         android:hint="Text Phone number"
         android:inputType="phone" />
@@ -61,19 +63,19 @@
         android:layout_marginLeft="30dp"
         android:layout_marginTop="20dp"
         android:layout_marginRight="40dp"
-        android:background="@color/colorPrimary"
+        android:background="@drawable/gamebtn"
         android:onClick="onAddButtonClicked"
         android:text="Add" />
 
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/editPhone"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="20dp"
-        android:background="@color/colorPrimary"
-        android:onClick="onPhotoButtonClicked"
-        android:text="Add Photo" />
+    <!--<Button-->
+        <!--android:id="@+id/button3"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_below="@id/editPhone"-->
+        <!--android:layout_marginLeft="20dp"-->
+        <!--android:layout_marginTop="20dp"-->
+        <!--android:background="@drawable/gamebtn"-->
+        <!--android:onClick="onPhotoButtonClicked"-->
+        <!--android:text="Add Photo" />-->
 
 </RelativeLayout>

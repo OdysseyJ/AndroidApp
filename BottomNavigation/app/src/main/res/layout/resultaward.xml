@@ -42,8 +42,8 @@
                 android:id="@+id/button_return"
                 android:layout_width="69dp"
                 android:layout_height="38dp"
-                android:background="@color/colorPrimary"
-                android:text="다시하기" />
+                android:background="@drawable/gamebtn"
+                android:text="Retry" />
         </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

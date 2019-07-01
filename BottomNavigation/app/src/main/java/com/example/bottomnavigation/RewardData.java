@@ -6,6 +6,8 @@ public class RewardData implements Comparable<RewardData> {
     private String sec;
     private String mil;
 
+    public RewardData(){
+    }
     public RewardData(String name, String sec, String mil){
         this.name = name;
         this.sec = sec;
@@ -34,16 +36,16 @@ public class RewardData implements Comparable<RewardData> {
 
     @Override
     public int compareTo(RewardData rewardData) {
-        if (Double.parseDouble(this.sec) < Double.parseDouble(rewardData.sec)){
+        if (Integer.parseInt(this.sec) < Integer.parseInt(rewardData.sec)){
             return -1;
         }
-        else if (Double.parseDouble(this.sec) > Double.parseDouble(rewardData.sec)){
+        else if (Integer.parseInt(this.sec) > Integer.parseInt(rewardData.sec)){
             return 1;
         }
-        else if (Double.parseDouble(this.mil) > Double.parseDouble(rewardData.mil)){
+        else if (Integer.parseInt(this.mil) > Integer.parseInt(rewardData.mil)){
             return 1;
         }
-        else if (Double.parseDouble(this.mil) < Double.parseDouble(rewardData.mil)){
+        else if (Integer.parseInt(this.mil) < Integer.parseInt(rewardData.mil)){
             return -1;
         }
         else{

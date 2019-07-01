@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -40,14 +41,27 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Action;
 import io.reactivex.schedulers.Schedulers;
 import com.example.bottomnavigation.databinding.FragmentThreeBinding;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class PageThree extends Fragment {
+
+    RewardRecyclerAdapter rewardRecyclerAdapter;
+
+    // for firebase database
+    static DatabaseReference myRef;
+    static ArrayList<RewardData> users = new ArrayList<>();
+    String userName_ref;
+    String userSec_ref;
+    String userMil_ref;
 
     Vector<Integer> _1to25, _26to50;
     FragmentThreeBinding binding;
@@ -77,6 +91,31 @@ public class PageThree extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        myRef = database.getReference();
+        myRef.child("users").child("F3").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                users.clear();
+                for (DataSnapshot temp : dataSnapshot.getChildren()){
+                    RewardData user = temp.getValue(RewardData.class);
+                    user.setName(user.getName());
+                    user.setSec(user.getSec());
+                    user.setMil(user.getMil());
+                    users.add(user);
+                    System.out.println("##################snapshot############");
+                    System.out.println(user.getName());
+                    System.out.println(user.getSec());
+                    System.out.println(user.getMil());
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
         View fragment_three = inflater.inflate(R.layout.fragment_three, container, false);
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_three, container, false);
        // binding = DataBindingUtil.setContentView(getActivity(), R.layout.fragment_three);
@@ -124,23 +163,34 @@ public class PageThree extends Fragment {
             if(resultCode==1111){
                 //이름값 인텐트에서 뽑아서 저장시키기, 이후 RewardActivity로 이동시킴.
                 userName = data.getStringExtra("name");
+
+                // firebase 저장
+                RewardData user = new  RewardData(userName, Long.toString(msecond), Long.toString(mmilisecond));
+                myRef.child("users").child("F3").child(userName).setValue(user);
+
+
+
+                // firebase에서 db 호출.
                 moveRewardActivity();
             }
         }
         // ranking 보는 액티비티 무사히 다녀올 경우
         else if (requestCode==2){
             if(resultCode==2222){
-
                 String topUserName = data.getStringExtra("name");
                 String topUserSec = data.getStringExtra("sec");
                 String topUserMil = data.getStringExtra("mil");
                 TextView rank1 = (TextView) getActivity().findViewById(R.id.rank1Text);
-                String temp = "현재1등 : "+topUserName+" "+topUserSec + "초 " + topUserMil;
+                String temp = topUserName+" "+topUserSec + "초 " + topUserMil;
                 rank1.setText(temp);
             }
         }
     }
 
+    private void refresh(){
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+
+        ft.detach(this).attach(this).commit();}
 
     @Override
     public void onDestroy() {
@@ -206,11 +256,16 @@ public class PageThree extends Fragment {
                                 Toast.makeText(getActivity(), "순서대로 선택해주세요.", Toast.LENGTH_SHORT).show();
                             }
                             if (now == 51) {
+
                                 stop();
+                                msecond = second;
+                                mmilisecond = milisecond;
+                                timeset = 1;
                                 moveNameInputActivity();
                             }
                         }
                         break;
+
                 }
             } catch (Exception e) {
                 e.printStackTrace();

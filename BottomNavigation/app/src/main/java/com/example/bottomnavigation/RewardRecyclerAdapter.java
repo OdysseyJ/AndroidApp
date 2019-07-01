@@ -16,7 +16,7 @@ import java.util.Collections;
 public class RewardRecyclerAdapter extends RecyclerView.Adapter<RewardRecyclerAdapter.ItemViewHolder2> {
 
     // adapter에 들어갈 list 입니다.
-    private static ArrayList<RewardData> listData = new ArrayList<RewardData>();
+    private static ArrayList<RewardData> listData = new ArrayList<>();
 
     public interface OnItemClickListener {
         public void onItemClick(View view, int position);
@@ -56,6 +56,8 @@ public class RewardRecyclerAdapter extends RecyclerView.Adapter<RewardRecyclerAd
         listData.add(data);
         Collections.sort(listData);
     }
+
+    void clearData(){listData.clear();}
 
     RewardData getFirstItem() {
         return listData.get(0);

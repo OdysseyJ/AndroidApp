@@ -13,6 +13,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
+
 public class PopupActivity extends AppCompatActivity {
 
     RewardRecyclerAdapter rewardRecyclerAdapter;
@@ -37,8 +42,19 @@ public class PopupActivity extends AppCompatActivity {
         String mil = intent.getStringExtra("mil");
 
         rewardRecyclerAdapter = new RewardRecyclerAdapter();
-        RewardData temp = new RewardData(name,sec,mil);
-        rewardRecyclerAdapter.addItem(temp);
+        rewardRecyclerAdapter.clearData();
+
+        for (RewardData tempz : PageThree.users){
+            RewardData f3user = new RewardData();
+            f3user.setName(tempz.getName());
+            f3user.setSec(tempz.getSec());
+            f3user.setMil(tempz.getMil());
+            System.out.println("#######################");
+            System.out.println(tempz.getName());
+            System.out.println(tempz.getSec());
+            System.out.println(tempz.getMil());
+            rewardRecyclerAdapter.addItem(f3user);
+        }
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(linearLayoutManager);

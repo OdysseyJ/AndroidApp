@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -30,7 +31,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ItemVi
     private ArrayList<Data> listData = new ArrayList<>();
     private ArrayList<ContactItem> contactlist = new ArrayList<>();
 
-    private Button btnTest; // 테스트용 버튼
+    private ImageButton btnTest; // 테스트용 버튼
     private final Context mContext;
 
     public interface OnItemClickListener {
@@ -102,7 +103,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ItemVi
             imageView = itemView.findViewById(R.id.imageView);
         }
 
-        public Button getBtnTest() {
+        public ImageButton getBtnTest() {
             return btnTest;
         }
 

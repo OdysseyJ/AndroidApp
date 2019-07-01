@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.Gallery;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -41,7 +42,7 @@ public class PageTwo extends Fragment {
     private static final int REQUEST_TAKE_ALBUM = 3333;
     private static final int REQUEST_IMAGE_CROP = 4444;
 
-    Button btn_capture, btn_album, btn_remove;
+    ImageButton btn_capture, btn_album, btn_remove;
     ImageView iv_view;
 
     String mCurrentPhotoPath;
@@ -84,9 +85,9 @@ public class PageTwo extends Fragment {
             }
         });
 
-        btn_capture = (Button) fragment_two.findViewById(R.id.btn_capture);
-        btn_album = (Button) fragment_two.findViewById(R.id.btn_album);
-        btn_remove = (Button) fragment_two.findViewById(R.id.btn_remove);
+        btn_capture = (ImageButton) fragment_two.findViewById(R.id.btn_capture);
+        btn_album = (ImageButton) fragment_two.findViewById(R.id.btn_album);
+        btn_remove = (ImageButton) fragment_two.findViewById(R.id.btn_remove);
         iv_view = (ImageView) fragment_two.findViewById(R.id.image);
 
         iv_view.setImageResource(R.drawable.select_picture);

@@ -6,21 +6,26 @@
     android:layout_height="match_parent"
     tools:context=".AddActivity">
 
-    <Button
+    <ImageButton
         android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="61dp"
+        android:layout_height="71dp"
+        android:background="@android:color/transparent"
         android:onClick="onBackButtonClicked"
+        android:scaleType="centerInside"
+        android:src="@drawable/back_button"
         android:text="Back" />
 
     <ImageView
         android:id="@+id/userImage"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
+        android:layout_width="96dp"
+        android:layout_height="89dp"
         android:layout_below="@id/button"
         android:layout_alignParentLeft="false"
-        android:layout_marginTop="85dp"
-        android:src="@drawable/profile" />
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="37dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/usericon" />
 
     <EditText
         android:id="@+id/editName"
@@ -28,8 +33,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/button"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="127dp"
-        android:layout_marginRight="21dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="40dp"
         android:ems="10"
         android:hint="Text Name"
         android:inputType="textPersonName" />
@@ -40,8 +45,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/editName"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="33dp"
-        android:layout_marginRight="25dp"
+        android:layout_marginTop="21dp"
+        android:layout_marginRight="40dp"
         android:ems="10"
         android:hint="Text Phone number"
         android:inputType="phone" />
@@ -53,8 +58,10 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/editPhone"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="-297dp"
-        android:layout_marginRight="3dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="40dp"
+        android:background="@color/colorPrimary"
         android:onClick="onAddButtonClicked"
         android:text="Add" />
 
@@ -63,9 +70,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/editPhone"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="-42dp"
-        android:layout_marginRight="298dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:background="@color/colorPrimary"
         android:onClick="onPhotoButtonClicked"
         android:text="Add Photo" />
 

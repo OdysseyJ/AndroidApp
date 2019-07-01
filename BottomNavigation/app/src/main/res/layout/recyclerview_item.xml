@@ -57,12 +57,14 @@
 
             </LinearLayout>
 
-            <Button
+            <ImageButton
                 android:id="@+id/call_button"
-                android:layout_width="28dp"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/call_icon2" />
+                android:background="@android:color/transparent"
+                android:scaleType="fitEnd"
+                android:src="@drawable/call_icon2" />
 
         </LinearLayout>
 

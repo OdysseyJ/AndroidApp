@@ -18,7 +18,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.Gallery;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -90,7 +89,7 @@ public class PageTwo extends Fragment {
         btn_remove = (ImageButton) fragment_two.findViewById(R.id.btn_remove);
         iv_view = (ImageView) fragment_two.findViewById(R.id.image);
 
-        iv_view.setImageResource(R.drawable.select_picture);
+        iv_view.setImageResource(R.drawable.placeholder);
 
         btn_capture.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,7 +99,7 @@ public class PageTwo extends Fragment {
         });
 
         btn_album.setOnClickListener(new View.OnClickListener() {
-            @Override
+            @OverrideNavi
             public void onClick(View v) {
                 getAlbum();
             }
@@ -129,7 +128,7 @@ public class PageTwo extends Fragment {
             mediaScanIntent.setData(contentUri);
             getActivity().sendBroadcast(mediaScanIntent);
 
-            iv_view.setImageResource(R.drawable.select_picture);
+            iv_view.setImageResource(R.drawable.select_picture_);
 
             myArray.remove(selectedPhoto);
             adapter.removeItem(selectedPhoto);

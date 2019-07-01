@@ -27,7 +27,6 @@ import java.util.ArrayList;
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ItemViewHolder> {
 
     // adapter에 들어갈 list 입니다.
-    private ArrayList<Data> listData = new ArrayList<>();
     private ArrayList<ContactItem> contactlist = new ArrayList<>();
 
     private Button btnTest; // 테스트용 버튼
@@ -39,12 +38,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ItemVi
 
     private OnItemClickListener onItemClickListener;
 
-    public RecyclerAdapter(Context context, OnItemClickListener onItemClickListener, ArrayList<ContactItem> contacts){
+    public RecyclerAdapter(Context context, OnItemClickListener onItemClickListener){
         mContext = context;
         this.onItemClickListener = onItemClickListener;
-        for (int i = 0; i < contacts.size(); i++){
-            contactlist.add(contacts.get(i));
-        }
     }
 
     @NonNull

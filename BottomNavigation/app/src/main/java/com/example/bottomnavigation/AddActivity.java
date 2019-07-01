@@ -47,7 +47,7 @@ public class AddActivity extends AppCompatActivity {
     }
 
     public void onBackButtonClicked(View v) {
-        Toast.makeText(getApplicationContext(), "돌아가기 버튼이 눌렸어요.", Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "취소했습니다.", Toast.LENGTH_SHORT).show();
         finish();
     }
 
@@ -58,15 +58,25 @@ public class AddActivity extends AppCompatActivity {
         EditText editphone = (EditText) findViewById(R.id.editPhone) ;
         newPhone = editphone.getText().toString() ;
 
-        System.out.println("name : "+ newName);
-        System.out.println("phonenum : "+ newPhone);
-        System.out.println("photoURI : "+ photoURI);
 
-        // 연락처에 저장하기
-        ContentResolver cr = getContentResolver();
-        ContactsIDinsert(cr, getApplicationContext(), newName, newPhone);
+        if (newName.equals("")){
+            Toast.makeText(getApplicationContext(), "이름을 입력하세요.", Toast.LENGTH_SHORT).show();
+        }
 
-        finish();
+        else if (newPhone.equals("")) {
+            Toast.makeText(getApplicationContext(), "번호를 입력하세요.", Toast.LENGTH_SHORT).show();
+        }
+
+        else {
+            // 연락처에 저장하기
+            ContentResolver cr = getContentResolver();
+            ContactsIDinsert(cr, getApplicationContext(), newName, newPhone);
+
+            Toast.makeText(getApplicationContext(), "연락처에 추가되었습니다.", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent();
+            setResult(RESULT_OK, intent);
+            finish();
+        }
     }
 
     public void onPhotoButtonClicked(View v) {

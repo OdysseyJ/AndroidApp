@@ -15,6 +15,7 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -63,12 +64,15 @@ public class PageOne extends Fragment {
         // Required empty public constructor
     }
 
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View fragment_one = inflater.inflate(R.layout.fragment_one, container, false);
         RecyclerView recyclerView = fragment_one.findViewById(R.id.recyclerView);
+
+
+        System.out.println("oncreateViewcalled");
+
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -83,20 +87,28 @@ public class PageOne extends Fragment {
             }
         });
 
-        //연락처 데이터 불러오기.
         getData();
+        //연락처 데이터 불러오기.
+
+        System.out.println(json);
+        for (int i = 0; i < contactItems.size(); i++){
+            System.out.println("##############################################");
+            System.out.println(contactItems.get(i).getUser_Name());
+        }
+
         adapter = new RecyclerAdapter(getContext(), new RecyclerAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
                 Intent intent = new Intent();
                 intent.setAction(Intent.ACTION_DIAL);
                 intent.setData(Uri.parse("tel:"+contactItems.get(position).getUser_phNumber()));
-                //Intent intent = new Intent(Intent.ACTION_CALL,Uri.parse("tel:12345"));
                 startActivity(intent);
             }
-        }, contactItems);
+        });
         recyclerView.setAdapter(adapter);
+
         setData();
+
         editSearch = (EditText) fragment_one.findViewById(R.id.editSearch);
 
         // TextEdit에 텍스트가 변경될 경우 실행되는 Listener이다.
@@ -126,11 +138,17 @@ public class PageOne extends Fragment {
         // 이름 받아오는 액티비티 무사히 갔다올 경우
         if (requestCode==ADD_RESULT){
             if(resultCode== Activity.RESULT_OK){
-                getData();
-                setData();
+                System.out.println("###############################################");
+                refresh();
             }
         }
     }
+
+    private void refresh(){
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+
+        ft.detach(this).attach(this).commit();}
+
 
     public void search(String charText){
 
@@ -185,6 +203,7 @@ public class PageOne extends Fragment {
                 contactItem.setPerson_id(person_id);
 
                 hashlist.add(contactItem);
+
             } while (cursor.moveToNext());
         }
 
@@ -196,23 +215,24 @@ public class PageOne extends Fragment {
 
         try {
             // JSON객체 만들기.
-            JSONObject data1 = new JSONObject();
             JSONArray arr = new JSONArray();
 
             for (int i = 0; i < contactItems.size(); i++){
-                JSONObject data = new JSONObject();
+                JSONObject data1 = new JSONObject();
+
                 data1.put("photo_id",contactItems.get(i).getPhoto_id());
                 data1.put("person_id",contactItems.get(i).getPerson_id());
                 data1.put("name",contactItems.get(i).getUser_Name());
                 data1.put("number",contactItems.get(i).getUser_phNumber());
-                arr.put(data);
+                arr.put(data1);
             }
 
             // userInfo라는 하나의 객체로 Array묶기.
             JSONObject userInfo = new JSONObject();
-            userInfo.put("userInfo",arr);
 
+            userInfo.put("userInfo",arr);
             json = userInfo.toString();
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -226,6 +246,8 @@ public class PageOne extends Fragment {
     // 이후 Data객체를 Recycler Adapter에 전달.
     private void setData(){
         // JSON Parsing을 위한 ArrayList
+        contactItems.clear();
+
         List<String> listUserName = new ArrayList<>();
         List<String> listNumber = new ArrayList<>();
         List<Integer> listPersonId = new ArrayList<>();

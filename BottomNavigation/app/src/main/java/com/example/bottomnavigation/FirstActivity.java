@@ -125,7 +125,6 @@ public class FirstActivity extends AppCompatActivity {
 
             switch (position) {
                 case 0:
-
                     navigation.setSelectedItemId(R.id.navigation_home);
                     break;
                 case 1:

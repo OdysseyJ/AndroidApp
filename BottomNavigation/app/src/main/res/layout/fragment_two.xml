@@ -37,8 +37,8 @@
                     android:layout_height="50dp"
                     android:background="@android:color/white"
                     android:gravity="center|clip_vertical|center_horizontal|center_vertical"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/camera_icon3" />
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/img_134042" />
 
                 <ImageButton
                     android:id="@+id/btn_remove"
